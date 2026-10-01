@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <!-- Google tag (gtag.js) - Analytics & Tracking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R3MEQV55O7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Main Google Analytics ID
+      gtag('config', 'G-R3MEQV55O7');
+    </script>
+
+    <!-- Google Ads Conversion Tracking Tag -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11009401249"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-11009401249');
+    </script>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxiwale1Way - Premium Cab Service & Jyotirlinga Darshan in Maharashtra</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+ 
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+ 
+    <!-- Payment QR Code Scanner Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative text-center border-2 border-yellow-400">
+            <button onclick="closeQrModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-xl font-bold">✕</button>
+            <h3 class="text-lg font-bold text-gray-900 mb-1" id="qrRouteTitle">Advance Payment</h3>
+            <p class="text-xs text-gray-500 mb-3">Scan & Pay using GPay, PhonePe, Paytm or UPI</p>
+            
+            <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-200 inline-block mb-3">
+                <img id="qrCodeImg" src="" alt="UPI Payment QR Code" class="w-48 h-48 mx-auto rounded-lg shadow-md">
+            </div>
+
+            <p class="text-sm font-bold text-gray-800 mb-1">Advance Amount: <span id="qrAmount" class="text-green-600 font-extrabold text-lg">₹1,000</span></p>
+            <div class="bg-gray-100 p-2 rounded-lg mb-4 text-xs">
+                <span class="text-gray-500">UPI ID:</span>
+                <span class="font-bold text-gray-900 select-all">9665144059-2@ybl</span>
+            </div>
+
+            <div class="space-y-2">
+                <a id="upiPayBtn" href="#" class="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg shadow transition text-sm">
+                    <i class="fa-solid fa-mobile-screen-button mr-1"></i> Pay via UPI App
+                </a>
+                <button onclick="closeQrModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg text-xs transition">
+                    Done / Payment Completed
+                </button>
+                <button onclick="closeQrModal()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 rounded-lg text-xs transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Website Notification Popup Modal -->
+    <div id="sitePopup" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative text-center border-2 border-yellow-400">
+            <button id="closeSitePopup" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-xl font-bold">✕</button>
+            <div class="w-16 h-16 bg-yellow-400 text-black rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-md">
+                <i class="fa-solid fa-taxi"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900">Need a Cab in Maharashtra?</h3>
+            <p class="text-xs text-gray-600 mt-2">Book 1-Way & Outstation Taxi at lowest rates. 24x7 Service Available!</p>
+            <div class="mt-5 space-y-2">
+                <a href="tel:+919518327667" class="block w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2.5 rounded-lg shadow transition text-sm">
+                    <i class="fa-solid fa-phone mr-1"></i> Call Now: 95183 27667
+                </a>
+                <a href="#home" id="bookNowClick" class="block w-full bg-gray-900 hover:bg-black text-white font-semibold py-2.5 rounded-lg text-sm transition">
+                    Book Online Quote
+                </a>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Header Section -->
+    <header class="sticky top-0 bg-white/95 backdrop-blur-md shadow-md z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2.5 bg-black border-2 border-yellow-400 px-3 py-1.5 rounded-xl shadow-md">
+                <div class="w-8 h-8 bg-yellow-400 text-black rounded-full flex items-center justify-center text-sm font-bold shadow">
+                    🚖
+                </div>
+                <div>
+                    <span class="font-black text-white text-base tracking-wider">TAXIWALE <span class="text-yellow-400">1WAY</span></span>
+                </div>
+            </a>
+ 
+            <nav class="hidden md:flex space-x-6 font-medium text-gray-700">
+                <a href="#home" class="hover:text-yellow-500 transition">Home</a>
+                <a href="#services" class="hover:text-yellow-500 transition">Services</a>
+                <a href="#fleet" class="hover:text-yellow-500 transition">Fleet</a>
+                <a href="#darshan" class="hover:text-yellow-500 transition">Darshan Tours</a>
+                <a href="#routes" class="hover:text-yellow-500 transition">Routes</a>
+                <a href="#directory" class="hover:text-yellow-500 transition">Directory</a>
+            </nav>
+ 
+            <div class="hidden md:block">
+                <a href="tel:+919518327667" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg flex items-center space-x-2 transition shadow">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+91 95183 27667</span>
+                </a>
+            </div>
+ 
+            <button id="menuBtn" class="md:hidden text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+ 
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-3 space-y-2">
+            <a href="#home" class="block py-2 hover:text-yellow-500">Home</a>
+            <a href="#services" class="block py-2 hover:text-yellow-500">Services</a>
+            <a href="#fleet" class="block py-2 hover:text-yellow-500">Fleet</a>
+            <a href="#darshan" class="block py-2 hover:text-yellow-500">Darshan Tours</a>
+            <a href="#routes" class="block py-2 hover:text-yellow-500">Routes</a>
+            <a href="#directory" class="block py-2 hover:text-yellow-500">Directory</a>
+            <a href="tel:+919518327667" class="block py-2 bg-yellow-400 text-center font-bold rounded-lg text-black">
+                <i class="fa-solid fa-phone mr-1"></i> Call Now
+            </a>
+        </div>
+    </header>
+ 
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-gray-900 text-white min-h-[550px] flex items-center py-8">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80" alt="Taxi Background" class="w-full h-full object-cover opacity-20">
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 py-6 w-full">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                
+                <div class="lg:col-span-6 pt-4">
+                    <div class="inline-block bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3">
+                        <i class="fa-solid fa-taxi mr-1"></i> All Maharashtra & India 24×7
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
+                        Book Affordable <br>
+                        <span class="text-yellow-400">One Way & Outstation</span> <br>
+                        Taxi Service
+                    </h1>
+                    <p class="text-gray-300 text-base md:text-lg mb-6">
+                        Safe • Affordable • 24×7 Available • Special Shirdi & Jyotirlinga Darshan Cabs.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="tel:+919518327667" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-3 rounded-lg flex items-center space-x-2 transition shadow-lg">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>Call Now</span>
+                        </a>
+                        <a href="https://wa.me/919665144059" target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-3 rounded-lg flex items-center space-x-2 transition shadow-lg">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>WhatsApp Now</span>
+                        </a>
+                    </div>
+                </div>
+ 
+                <!-- Booking Form Card -->
+                <div class="lg:col-span-6 bg-white text-gray-800 p-5 rounded-2xl shadow-2xl border border-gray-100">
+                    <div class="flex items-center justify-between border-b pb-3 mb-3">
+                        <div class="w-full">
+                            <span class="text-xs text-blue-600 font-bold uppercase tracking-wider block mb-1">OUTSTATION ONE WAY TRIP</span>
+                            
+                            <div class="flex items-center justify-between gap-2 mt-2">
+                                <label for="cabType" class="text-xs font-bold text-gray-700 whitespace-nowrap">SELECT CAB:</label>
+                                <select id="cabType" onchange="calculateRouteDistance()" class="w-full px-3 py-1.5 border border-yellow-400 rounded-lg text-sm font-bold text-gray-900 bg-yellow-50 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    <option value="Swift Dzire" data-rate="18" selected>Swift Dzire (Sedan - 4 Seats)</option>
+                                    <option value="Aura" data-rate="18">Hyundai Aura (Sedan - 4 Seats)</option>
+                                    <option value="XUV 3XO" data-rate="19">XUV 3XO (Compact SUV - 4 Seats)</option>
+                                    <option value="Ertiga Carrier" data-rate="21">Ertiga Carrier (SUV - 6 Seats)</option>
+                                    <option value="Innova" data-rate="24">Toyota Innova (SUV - 7 Seats)</option>
+                                    <option value="Innova Crysta" data-rate="26">Innova Crysta (Premium SUV - 7 Seats)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="bookingForm" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-[11px] text-gray-500 font-medium">FROM (PICKUP)</label>
+                                <input type="text" id="custPickup" value="" oninput="calculateRouteDistance()" placeholder="e.g. Mumbai" required class="w-full px-3 py-1.5 border rounded-lg text-sm font-semibold text-gray-800 bg-white focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-gray-500 font-medium">TO (DROP)</label>
+                                <input type="text" id="custDrop" value="" oninput="calculateRouteDistance()" placeholder="e.g. Shirdi" required class="w-full px-3 py-1.5 border rounded-lg text-sm font-semibold text-gray-800 bg-white focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-100 border border-amber-300 rounded-lg p-2.5 flex items-center justify-between text-xs font-bold text-amber-900">
+                            <span><i class="fa-solid fa-map-location-dot mr-1 text-amber-700"></i> Estimated Distance:</span>
+                            <span id="distDisplay" class="bg-amber-500 text-white px-2 py-0.5 rounded-full text-xs">0 KM</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <div>
+                                <label class="text-[11px] text-gray-500 font-medium">NAME</label>
+                                <input type="text" id="custName" placeholder="Your Name" required class="w-full px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-gray-500 font-medium">MOBILE</label>
+                                <input type="tel" id="custPhone" placeholder="Mobile Number" required class="w-full px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="text-[11px] text-gray-500 font-medium">EMAIL ID</label>
+                                <input type="email" id="custEmail" placeholder="taxiwaleway@gmail.com" required class="w-full px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[11px] text-gray-500 font-medium">PICKUP DATE</label>
+                            <input type="date" id="custDate" required class="w-full px-3 py-1.5 border rounded-lg text-sm focus:ring-2 focus:ring-yellow-400 focus:outline-none text-gray-700">
+                        </div>
+
+                        <div class="bg-sky-50/70 border border-sky-100 rounded-xl p-3 space-y-1.5 text-xs text-gray-700">
+                            <p class="font-bold text-gray-900 border-b border-sky-200/60 pb-1 uppercase tracking-wide text-[10px]">INCLUSIONS</p>
+                            <div class="flex items-center justify-between">
+                                <span><i class="fa-solid fa-road text-sky-600 mr-1.5"></i> <span id="includedKmText">0 Km</span> included</span>
+                                <span class="text-gray-500" id="extraKmRate">₹18/km extra</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-file-invoice-dollar text-sky-600 mr-1.5"></i> Toll, Tax and state charges included
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-user-check text-sky-600 mr-1.5"></i> Driver allowance included
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-900 text-white rounded-xl p-3.5 shadow-md space-y-3">
+                            <p id="payNote" class="text-xs text-sky-200 font-medium">Pay ₹1,000 in advance to reserve and rest to driver.</p>
+                            
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center space-x-2 bg-blue-800/80 hover:bg-blue-800 p-2 rounded-lg cursor-pointer border border-blue-600">
+                                    <input type="radio" id="payPartRadio" name="payOption" value="Part Pay" checked onclick="onPaymentRadioSelect('part')" class="w-4 h-4 text-yellow-400 focus:ring-yellow-400">
+                                    <div>
+                                        <p class="text-[10px] text-gray-300">Advance Pay</p>
+                                        <p class="font-bold text-sm" id="partPayText">₹1,000</p>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center space-x-2 bg-blue-800/80 hover:bg-blue-800 p-2 rounded-lg cursor-pointer border border-blue-600">
+                                    <input type="radio" id="payFullRadio" name="payOption" value="Full Pay" onclick="onPaymentRadioSelect('full')" class="w-4 h-4 text-yellow-400 focus:ring-yellow-400">
+                                    <div>
+                                        <p class="text-[10px] text-gray-300">Full Pay (₹700 Off)</p>
+                                        <p class="font-bold text-sm" id="fullPayText">₹0</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 pt-1">
+                                <button type="button" onclick="triggerAdvancePay()" class="bg-yellow-400 hover:bg-yellow-500 text-black font-extrabold py-2.5 px-2 rounded-lg shadow transition flex items-center justify-center space-x-1 text-xs uppercase tracking-tight">
+                                    <i class="fa-solid fa-qrcode text-sm"></i>
+                                    <span id="advBtnLabel">ADVANCE ₹1000</span>
+                                </button>
+                                <button type="button" onclick="triggerWhatsAppBook()" class="bg-green-500 hover:bg-green-600 text-white font-extrabold py-2.5 px-2 rounded-lg shadow transition flex items-center justify-center space-x-1 text-xs uppercase tracking-tight">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                                    <span>BOOK WHATSAPP</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="sendBookingEmail()" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 rounded-xl shadow transition flex items-center justify-center space-x-2 text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-envelope text-sm"></i>
+                            <span>Send Booking via Email (taxiwaleway@gmail.com)</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">Our <span class="text-yellow-500">Services</span></h2>
+                <p class="text-gray-600 mt-2">Reliable & Comfortable Cabs for Every Journey</p>
+            </div>
+ 
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 bg-gray-50 rounded-xl border border-yellow-200 hover:shadow-lg transition relative overflow-hidden">
+                    <span class="absolute top-3 right-3 bg-red-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow animate-pulse">30% OFF</span>
+                    <div class="w-12 h-12 bg-yellow-400 text-black rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">One Way Cab</h3>
+                    <p class="text-gray-600">Pay only one side fare. Zero return charges. Special 30% discount applied!</p>
+                </div>
+ 
+                <div class="p-6 bg-gray-50 rounded-xl border border-yellow-200 hover:shadow-lg transition relative overflow-hidden">
+                    <span class="absolute top-3 right-3 bg-red-600 text-white text-[11px] font-extrabold px-2.5 py-1 rounded-full shadow animate-pulse">30% OFF</span>
+                    <div class="w-12 h-12 bg-yellow-400 text-black rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Round Trip Taxi</h3>
+                    <p class="text-gray-600">Comfortable round trips for business and family tours with 30% off.</p>
+                </div>
+ 
+                <div class="p-6 bg-gray-50 rounded-xl border hover:shadow-lg transition">
+                    <div class="w-12 h-12 bg-yellow-400 text-black rounded-lg flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-plane-departure"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Airport Transfer</h3>
+                    <p class="text-gray-600">Guaranteed on-time Mumbai & Pune Airport pickup and drop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Fleet Section -->
+    <section id="fleet" class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">Our <span class="text-yellow-500">Fleet & Booking</span></h2>
+                <p class="text-gray-600 mt-2">Select Pickup, Drop & Book Your Preferred Vehicle</p>
+            </div>
+ 
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl overflow-hidden shadow border flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80" class="h-40 w-full object-cover" alt="Dzire">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-lg">Dzire / Aura</h3>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded">Sedan (4 Seats)</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2">Comfortable sedan for budget travel</p>
+                            <p class="text-xs font-bold text-gray-800 mb-2">Rate: ₹18 / KM</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2">
+                        <button onclick="bookDirectCard('Swift Dzire')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book on WhatsApp</span>
+                        </button>
+                        <button onclick="openQrModal('Dzire Booking', 1000)" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Advance ₹1000</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow border flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80" class="h-40 w-full object-cover" alt="XUV 3XO">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-lg">XUV 3XO</h3>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded">Compact SUV</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2">Modern Compact SUV for stylish rides</p>
+                            <p class="text-xs font-bold text-gray-800 mb-2">Rate: ₹19 / KM</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2">
+                        <button onclick="bookDirectCard('XUV 3XO')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book on WhatsApp</span>
+                        </button>
+                        <button onclick="openQrModal('XUV 3XO Booking', 1000)" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Advance ₹1000</span>
+                        </button>
+                    </div>
+                </div>
+ 
+                <div class="bg-white rounded-xl overflow-hidden shadow border flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&q=80" class="h-40 w-full object-cover" alt="Ertiga">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-lg">Ertiga Carrier</h3>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded">SUV (6 Seats)</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2">Ertiga with Roof Carrier for Extra Luggage</p>
+                            <p class="text-xs font-bold text-gray-800 mb-2">Rate: ₹21 / KM</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2">
+                        <button onclick="bookDirectCard('Ertiga Carrier')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book on WhatsApp</span>
+                        </button>
+                        <button onclick="openQrModal('Ertiga Booking', 1000)" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Advance ₹1000</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow border flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1563720225384-9a0f443b7454?auto=format&fit=crop&q=80" class="h-40 w-full object-cover" alt="Innova">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-lg">Toyota Innova</h3>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded">SUV (7 Seats)</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2">Spacious & Comfortable Family Vehicle</p>
+                            <p class="text-xs font-bold text-gray-800 mb-2">Rate: ₹24 / KM</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2">
+                        <button onclick="bookDirectCard('Innova')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book on WhatsApp</span>
+                        </button>
+                        <button onclick="openQrModal('Innova Booking', 1000)" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Advance ₹1000</span>
+                        </button>
+                    </div>
+                </div>
+ 
+                <div class="bg-white rounded-xl overflow-hidden shadow border flex flex-col justify-between">
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1563720225384-9a0f443b7454?auto=format&fit=crop&q=80" class="h-40 w-full object-cover" alt="Crysta">
+                        <div class="p-4">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-lg">Innova Crysta</h3>
+                                <span class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-0.5 rounded">Premium SUV</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2">Luxury 7-Seater for Outstation Travel</p>
+                            <p class="text-xs font-bold text-gray-800 mb-2">Rate: ₹26 / KM</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 space-y-2">
+                        <button onclick="bookDirectCard('Innova Crysta')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book on WhatsApp</span>
+                        </button>
+                        <button onclick="openQrModal('Crysta Booking', 1000)" class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded-lg transition text-xs flex items-center justify-center space-x-1 shadow">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Advance ₹1000</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jyotirlinga & Temple Darshan Tours Section -->
+    <section id="darshan" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">Popular <span class="text-yellow-500">Shirdi & Jyotirlinga Darshan Tours</span></h2>
+                <p class="text-gray-600 mt-2">Special Cab Packages with Safe & Experienced Drivers</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Shirdi Sai Darshan -->
+                <div class="bg-gray-50 border rounded-2xl overflow-hidden shadow hover:shadow-xl transition flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1621570279611-4b1567ba755d?auto=format&fit=crop&q=80" alt="Shirdi Darshan" class="w-full h-48 object-cover">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-1">Shirdi Sai Darshan Cab</h3>
+                            <p class="text-xs text-gray-500 mb-3">Special pickup from Mumbai, Pune, Nashik with VIP Darshan assistance.</p>
+                        </div>
+                        <a href="https://wa.me/919665144059?text=Hi,%20I%20want%20to%20book%20Shirdi%20Sai%20Darshan%20Cab%20package." target="_blank" class="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl shadow text-sm transition">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Book via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Trimbakeshwar Jyotirlinga -->
+                <div class="bg-gray-50 border rounded-2xl overflow-hidden shadow hover:shadow-xl transition flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80" alt="Trimbakeshwar" class="w-full h-48 object-cover">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-1">Trimbakeshwar Jyotirlinga</h3>
+                            <p class="text-xs text-gray-500 mb-3">Nashik / Shirdi to Trimbakeshwar holy temple comfortable cab tour.</p>
+                        </div>
+                        <a href="https://wa.me/919665144059?text=Hi,%20I%20want%20to%20book%20Trimbakeshwar%20Jyotirlinga%20Cab." target="_blank" class="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl shadow text-sm transition">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Book via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bhimashankar Jyotirlinga -->
+                <div class="bg-gray-50 border rounded-2xl overflow-hidden shadow hover:shadow-xl transition flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1571508601891-ca5e7a713859?auto=format&fit=crop&q=80" alt="Bhimashankar" class="w-full h-48 object-cover">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-1">Bhimashankar Jyotirlinga</h3>
+                            <p class="text-xs text-gray-500 mb-3">Mumbai or Pune to Bhimashankar one day or round trip taxi.</p>
+                        </div>
+                        <a href="https://wa.me/919665144059?text=Hi,%20I%20want%20to%20book%20Bhimashankar%20Jyotirlinga%20Cab." target="_blank" class="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl shadow text-sm transition">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Book via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Grishneshwar Jyotirlinga -->
+                <div class="bg-gray-50 border rounded-2xl overflow-hidden shadow hover:shadow-xl transition flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1590001155093-a3c66ab0c3bc?auto=format&fit=crop&q=80" alt="Grishneshwar" class="w-full h-48 object-cover">
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-1">Grishneshwar Jyotirlinga</h3>
+                            <p class="text-xs text-gray-500 mb-3">Aurangabad / Shirdi to Grishneshwar (Ellora) temple cab tour.</p>
+                        </div>
+                        <a href="https://wa.me/919665144059?text=Hi,%20I%20want%20to%20book%20Grishneshwar%20Jyotirlinga%20Cab." target="_blank" class="block text-center bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-xl shadow text-sm transition">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> Book via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Popular Routes Section -->
+    <section id="routes" class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold">Popular <span class="text-yellow-500">Routes in Maharashtra</span></h2>
+                <p class="text-gray-600 mt-2">Affordable Rates Across Major Cities</p>
+            </div>
+ 
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Mumbai ↔ Pune</p>
+                        <p class="text-xs text-gray-500">150 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Mumbai ↔ Pune', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Mumbai ↔ Shirdi</p>
+                        <p class="text-xs text-gray-500">240 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Mumbai ↔ Shirdi', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+ 
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Pune ↔ Shirdi</p>
+                        <p class="text-xs text-gray-500">200 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Pune ↔ Shirdi', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+ 
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Mumbai ↔ Goa</p>
+                        <p class="text-xs text-gray-500">590 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Mumbai ↔ Goa', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+ 
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Mumbai ↔ Nashik</p>
+                        <p class="text-xs text-gray-500">165 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Mumbai ↔ Nashik', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+ 
+                <div class="p-4 bg-white border rounded-lg flex items-center justify-between shadow-sm">
+                    <div>
+                        <p class="font-bold">Nashik ↔ Shirdi</p>
+                        <p class="text-xs text-gray-500">90 KM | Advance: ₹1000</p>
+                    </div>
+                    <button onclick="openQrModal('Nashik ↔ Shirdi', 1000)" class="text-xs bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1 shrink-0 ml-2">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>Pay ₹1000</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive Keywords & Directory Section -->
+    <section id="directory" class="py-12 bg-gray-950 text-gray-300 border-t border-gray-800 text-xs leading-relaxed">
+        <div class="max-w-7xl mx-auto px-4 space-y-6">
+            <h3 class="text-sm font-bold text-yellow-400 tracking-wider uppercase mb-3">TAXIWALE1WAY - POPULAR CITIES, ROUTES & CAB DIRECTORY</h3>
+            
+            <div>
+                <p class="font-bold text-white mb-1">POPULAR CITIES:</p>
+                <p>AGRA | AHMEDABAD | AHMEDNAGAR | AJMER | ALIGARH | ALLAHABAD | ALMORA | ALWAR | AMBALA | AMBERNATH | AMRAVATI | AMRITSAR | ANAND | ANANTAPUR | ANJUNA | ANKLESHWAR | ASANSOL | AURANGABAD | JALGAON | NASHIK | PUNE | MUMBAI | NAGPUR | SOLAPUR | KOLHAPUR | NANDED | JALNA | DHULE | LATUR | AKOLA</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-white mb-1">SERVICES & FLEET:</p>
+                <p>ONE WAY CAB | CAR RENTAL | AIRPORT TAXI | LOCAL SIGHTSEEING | INNOVA | TEMPO TRAVELLER | PET FRIENDLY CAB | SHIRDI CAR RENTAL | SHIRDI DARSHAN BOOK | OUTSTATION TAXI</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-white mb-1">ONE WAY TAXI FROM MUMBAI:</p>
+                <p>One Way Taxi from Mumbai to Mahabaleshwar | One Way Taxi from Mumbai to Alibaug | One Way Taxi from Mumbai to Kashid | One Way Taxi from Mumbai to Lonavala | One Way Taxi from Mumbai to Silvassa | One Way Taxi from Mumbai to Indore | One Way Taxi from Mumbai to Karjat | One Way Taxi from Mumbai to Khandala | One Way Taxi from Mumbai to Nashik | One Way Taxi from Mumbai to Shani Shingnapur</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-white mb-1">POPULAR INTERCITY ROUTES:</p>
+                <p>Jalgaon to Shirdi cab 1999 | Aurangabad to Shirdi cab | Shirdi to Mumbai cab | Ahmedabad to Shirdi cab | Mumbai to Delhi taxi | Mumbai to Yeola taxi | Yeola to Shirdi cab | Yeola to Mumbai cab | Yeola to Manmad taxi | Yeola to Dhule taxi | Shirdi to Indore taxi | Indore to Shirdi cab | Mumbai to Nagpur taxi | Mumbai to Yeola cab | Mumbai to Pune cab | Pune to Shirdi cab | Shirdi to Pune cab | Shirdi to Mumbai taxi | Mumbai to Shirdi cab | Nashik to Mumbai cab | Nashik to Indore taxi | Yeola to Pune cab | Pune to Yeola cab | Pune to Manmad taxi | Manmad to Pune cab | Shirdi to Ellora taxi | Shirdi to Ajanta taxi | Shirdi to Trimbakeshwar taxi | Mumbai to Kolhapur taxi | Mumbai to Jalgaon taxi | Mumbai to Ratnagiri taxi | Shirdi to Manmad taxi</p>
+            </div>
+
+            <div>
+                <p class="font-bold text-white mb-1">STATIONS & LOCAL TAXIS:</p>
+                <p>Nashik railway station taxi | Shirdi railway station taxi | Manmad railway station taxi | Vinchur taxi | Shrirampur taxi | Ahmednagar taxi | Jalna taxi | Jalgaon taxi | Aurangabad taxi | Shanishinapur taxi | Road taxi | Airport taxi | Trimbakeshwar taxi | Bhimashankar taxi | Nagarsol cab | Nagarsol taxi | Ellora taxi | Taxi near me | Cab service | Taxi cab | Cab booking | Shirdi cab | Taxi one way | One way cab | Outstation Taxi | One way cab service | Taxiwalelway | Taxi wale</p>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-gray-950 text-gray-400 pt-12 pb-24 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 pb-8 border-b border-gray-800">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Taxiwale<span class="text-yellow-400">1Way</span></h3>
+                    <p class="text-sm mb-4">Reliable One Way & Outstation Taxi Service Across Maharashtra & All India.</p>
+                    <div class="space-y-2 text-sm">
+                        <p><i class="fa-solid fa-phone text-yellow-400 mr-2"></i> +91 95183 27667</p>
+                        <p><i class="fa-solid fa-envelope text-yellow-400 mr-2"></i> taxiwaleway@gmail.com</p>
+                        <p><i class="fa-solid fa-location-dot text-yellow-400 mr-2"></i> Shirdi & Mumbai, Maharashtra, India</p>
+                    </div>
+                </div>
+ 
+                <div>
+                    <h4 class="text-white font-bold mb-3">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-yellow-400">Home</a></li>
+                        <li><a href="#services" class="hover:text-yellow-400">One Way Taxi Service</a></li>
+                        <li><a href="#darshan" class="hover:text-yellow-400">Shirdi & Jyotirlinga Darshan</a></li>
+                        <li><a href="#routes" class="hover:text-yellow-400">Mumbai to Shirdi Cab</a></li>
+                    </ul>
+                </div>
+ 
+                <div>
+                    <h4 class="text-white font-bold mb-3">Contact Us</h4>
+                    <div class="space-y-3">
+                        <a href="tel:+919518327667" class="block text-center bg-yellow-400 text-black font-bold py-2 rounded hover:bg-yellow-500 transition">
+                            <i class="fa-solid fa-phone mr-1"></i> Call Now
+                        </a>
+                        <a href="https://wa.me/919665144059" target="_blank" class="block text-center bg-green-600 text-white font-bold py-2 rounded hover:bg-green-700 transition">
+                            <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="text-center text-xs mt-6 text-gray-500">
+                © 2026 Taxiwale1Way. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+ 
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-20 right-4 flex flex-col space-y-3 z-50">
+        <a href="https://wa.me/919665144059" target="_blank" class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl shadow-2xl hover:scale-110 transition border-2 border-white">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="tel:+919518327667" class="w-12 h-12 bg-yellow-400 text-black rounded-full flex items-center justify-center text-2xl shadow-2xl hover:scale-110 transition border-2 border-white">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    </div>
+ 
+    <!-- JavaScript Logic -->
+    <script>
+        let currentAdv = 1000;
+        let currentFull = 0;
+        let selectedPayType = "Part Pay";
+        let calculatedDistanceKm = 0;
+        let typingTimer;
+
+        function calculateRouteDistance() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(async () => {
+                let pickup = document.getElementById('custPickup').value.trim();
+                let drop = document.getElementById('custDrop').value.trim();
+                const select = document.getElementById('cabType');
+                const selectedOpt = select.options[select.selectedIndex];
+                const ratePerKm = parseInt(selectedOpt.getAttribute('data-rate'));
+
+                if (!pickup || !drop || pickup.length < 2 || drop.length < 2) {
+                    document.getElementById('distDisplay').innerText = "0 KM";
+                    document.getElementById('includedKmText').innerText = "0 Km";
+                    currentFull = 0;
+                    updatePaymentDetails(ratePerKm);
+                    return;
+                }
+
+                document.getElementById('distDisplay').innerText = "Calculating...";
+
+                try {
+                    let pCoords = await getLatLon(pickup + ", Maharashtra, India");
+                    let dCoords = await getLatLon(drop + ", Maharashtra, India");
+
+                    if (pCoords && dCoords) {
+                        let url = `https://router.project-osrm.org/route/v1/driving/${pCoords.lon},${pCoords.lat};${dCoords.lon},${dCoords.lat}?overview=false`;
+                        let response = await fetch(url);
+                        let data = await response.json();
+
+                        if (data.routes && data.routes.length > 0) {
+                            calculatedDistanceKm = Math.round(data.routes[0].distance / 1000);
+                            if (calculatedDistanceKm < 10) calculatedDistanceKm = 15;
+                        } else {
+                            calculatedDistanceKm = 100;
+                        }
+                    } else {
+                        calculatedDistanceKm = 100;
+                    }
+                } catch (error) {
+                    calculatedDistanceKm = 100;
+                }
+
+                document.getElementById('distDisplay').innerText = calculatedDistanceKm + " KM";
+                document.getElementById('includedKmText').innerText = calculatedDistanceKm + " Km";
+
+                let rawTotal = calculatedDistanceKm * ratePerKm;
+                currentFull = Math.max(1000, rawTotal - 700);
+
+                updatePaymentDetails(ratePerKm);
+            }, 600);
+        }
+
+        async function getLatLon(placeName) {
+            let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(placeName)}`;
+            let response = await fetch(url);
+            let data = await response.json();
+            if (data && data.length > 0) {
+                return { lat: data[0].lat, lon: data[0].lon };
+            }
+            return null;
+        }
+
+        function updatePaymentDetails(ratePerKm) {
+            currentAdv = 1000;
+            document.getElementById('extraKmRate').innerText = `₹${ratePerKm}/km extra`;
+            document.getElementById('partPayText').innerText = `₹1,000`;
+            document.getElementById('fullPayText').innerText = `₹${currentFull.toLocaleString()}`;
+            document.getElementById('advBtnLabel').innerText = `ADVANCE ₹1000`;
+            updatePaymentNote();
+        }
+
+        function onPaymentRadioSelect(type) {
+            selectedPayType = (type === 'part') ? "Part Pay" : "Full Pay";
+            if (type === 'full') {
+                document.getElementById('advBtnLabel').innerText = `PAY ₹${currentFull.toLocaleString()}`;
+            } else {
+                document.getElementById('advBtnLabel').innerText = `ADVANCE ₹1000`;
+            }
+            updatePaymentNote();
+        }
+
+        function updatePaymentNote() {
+            const payNote = document.getElementById('payNote');
+            if (selectedPayType === "Part Pay") {
+                const rest = Math.max(0, currentFull - 1000);
+                payNote.innerText = `Pay ₹1,000 in advance to reserve and rest (₹${rest.toLocaleString()}) to driver.`;
+            } else {
+                payNote.innerText = `Full payment of ₹${currentFull.toLocaleString()} (incl. ₹700 discount) to reserve your taxi ride.`;
+            }
+        }
+
+        function triggerAdvancePay() {
+            const payingNow = selectedPayType === "Part Pay" ? 1000 : currentFull;
+            const title = selectedPayType === "Part Pay" ? "Advance Payment" : "Full Payment";
+            openQrModal(title, payingNow);
+        }
+
+        function bookDirectCard(cabName) {
+            const text = `🚖 *Booking Inquiry*%0A%0A🚗 *Cab:* ${encodeURIComponent(cabName)}%0AI want to book this cab. Please share details.`;
+            window.open(`https://wa.me/919665144059?text=${text}`, '_blank');
+        }
+
+        function triggerWhatsAppBook() {
+            const cab = document.getElementById('cabType').value;
+            const name = document.getElementById('custName').value || 'Customer';
+            const phone = document.getElementById('custPhone').value || '-';
+            const email = document.getElementById('custEmail').value || '-';
+            const pickup = document.getElementById('custPickup').value || '-';
+            const drop = document.getElementById('custDrop').value || '-';
+            const date = document.getElementById('custDate').value || '-';
+            const payingNow = selectedPayType === "Part Pay" ? 1000 : currentFull;
+            const balance = selectedPayType === "Part Pay" ? Math.max(0, currentFull - 1000) : 0;
+
+            const text = `🚖 *New Taxi Booking Request*%0A%0A` +
+                         `🚗 *Cab:* ${encodeURIComponent(cab)}%0A` +
+                         `👤 *Name:* ${encodeURIComponent(name)}%0A` +
+                         `📞 *Phone:* ${encodeURIComponent(phone)}%0A` +
+                         `📧 *Email:* ${encodeURIComponent(email)}%0A` +
+                         `📍 *Pickup:* ${encodeURIComponent(pickup)}%0A` +
+                         `🏁 *Drop:* ${encodeURIComponent(drop)}%0A` +
+                         `🛣 *Distance:* ${calculatedDistanceKm} KM%0A` +
+                         `📅 *Date:* ${encodeURIComponent(date)}%0A%0A` +
+                         `💳 *Payment:* ${encodeURIComponent(selectedPayType)} (₹${payingNow})%0A` +
+                         `💰 *Balance to Driver:* ₹${balance}`;
+
+            window.open(`https://wa.me/919665144059?text=${text}`, '_blank');
+        }
+
+        function sendBookingEmail() {
+            const cab = document.getElementById('cabType').value;
+            const name = document.getElementById('custName').value || 'Customer';
+            const phone = document.getElementById('custPhone').value || '-';
+            const email = document.getElementById('custEmail').value || '-';
+            const pickup = document.getElementById('custPickup').value || '-';
+            const drop = document.getElementById('custDrop').value || '-';
+            const date = document.getElementById('custDate').value || '-';
+            const payingNow = selectedPayType === "Part Pay" ? 1000 : currentFull;
+            const balance = selectedPayType === "Part Pay" ? Math.max(0, currentFull - 1000) : 0;
+
+            const emailSubject = encodeURIComponent(`New Booking Request: ${pickup} to ${drop} (${cab})`);
+            const emailBody = encodeURIComponent(`New Taxi Booking Details:\n\n` +
+                              `Cab Selected: ${cab}\n` +
+                              `Name: ${name}\n` +
+                              `Phone: ${phone}\n` +
+                              `Email: ${email}\n` +
+                              `Pickup: ${pickup}\n` +
+                              `Drop: ${drop}\n` +
+                              `Distance: ${calculatedDistanceKm} KM\n` +
+                              `Date: ${date}\n` +
+                              `Payment Option: ${selectedPayType}\n` +
+                              `Paid/Payable Now: ₹${payingNow}\n` +
+                              `Balance to Driver: ₹${balance}`);
+
+            window.location.href = `mailto:taxiwaleway@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+        }
+
+        function openQrModal(title, amount = 1000) {
+            const targetUpi = "9665144059-2@ybl";
+            document.getElementById('qrRouteTitle').innerText = title;
+            document.getElementById('qrAmount').innerText = '₹' + amount;
+            
+            const upiUrl = `upi://pay?pa=${targetUpi}&pn=Taxiwale1Way&am=${amount}&cu=INR`;
+            const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+            
+            document.getElementById('qrCodeImg').src = qrApi;
+            document.getElementById('upiPayBtn').href = upiUrl;
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        const sitePopup = document.getElementById('sitePopup');
+        const closeSitePopup = document.getElementById('closeSitePopup');
+        const bookNowClick = document.getElementById('bookNowClick');
+
+        if(closeSitePopup) closeSitePopup.addEventListener('click', () => { sitePopup.classList.add('hidden'); });
+        if(bookNowClick) bookNowClick.addEventListener('click', () => { sitePopup.classList.add('hidden'); });
+
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if(menuBtn) menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+    </script>
+</body>
+</html>
